@@ -2,22 +2,60 @@ import React, { Component } from 'react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
 import TeacherView from './views/TeacherView';
 import StudentView from './views/StudentView';
+import TeacherStore from './stores/TeacherStore';
 
+/**
+* each component can import and init as many stores as needed
+* store will initialize only once and is a singleton
+* component can subscribe to stores events (update...)
+*
+* or we can subscribe to all stores here and pass them as props
+* to children in Container.
+*/
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      'teachers': TeacherStore.getTeachers()
+    }
+    this.updateTeachers = this.updateTeachers.bind(this)
+  }
+
+  componentWillMount() {
+    TeacherStore.init();
+    console.log("Initialized TeacherStore");
+  }
+
+  componentDidMount() {
+    console.log("Adding changeListener");
+    TeacherStore.addChangeListener(this.updateTeachers);
+    this.updateTeachers(); // just to make sure we are loaded
+  }
+
+  componentWillUnmount() {
+    TeacherStore.removeChangeListener(this.updateTeachers);
+  }
+
+  updateTeachers() {
+    // if (!this.isMounted())
+    //   return;
+    console.log("Setting state in updateTeachers");
+    this.setState({
+      teachers: TeacherStore.getTeachers(),
+      loading: false
+    });
+  }
+
   render() {
-    let {teachers, students} = this.props
     return (
-      <Router history={browserHistory}>
-        <Route path='/' teachers={teachers} students={students} component={Container} >
-          <IndexRoute component={Home} />
-          <Route path='/teacher' teacher={teachers[0]} component={TeacherView} />
-          <Route path='/student' teacher={students[0]} component={StudentView} />
-          <Route path='*' component={NotFound} />
-        </Route>
-      </Router>
+      <div>
+        <Nav />
+        {this.props.children}
+      </div>
     )
   }
 }
+
 
 const Nav = () => (
   <div>
@@ -26,17 +64,6 @@ const Nav = () => (
     <Link to='/student'>Student</Link>
   </div>
 )
-
-const Container = (props) => <div>
-  {props.children && React.cloneElement(props.children, {
-    teachers: props.route.teachers,
-    teacher: props.route.teachers[0],
-    students: props.route.students,
-    student: props.route.students[0],
-  })}
-  <Nav />
-</div>
-
 
 const Home = () =>
   <div>
@@ -49,4 +76,13 @@ const Home = () =>
 const NotFound = () => (
   <h1>404.. This page is not found!</h1>)
 
-export default App
+const routes = <Router history={browserHistory}>
+  <Route path='/' component={App} >
+    <IndexRoute component={Home} />
+    <Route path='teacher/:name' component={TeacherView} />
+    <Route path='student/:name' component={StudentView} />
+    <Route path='*' component={NotFound} />
+  </Route>
+</Router>
+
+export default routes
