@@ -1,8 +1,8 @@
-var API_BASE = 'http://someplace/api/';
+export const API_BASE = 'http://127.0.0.1:8081/api/';
 localStorage.token = localStorage.token || (Date.now()*Math.random());
 
 
-function getJSON(url, cb) {
+export function getJSON(url, cb) {
   var req = new XMLHttpRequest();
   req.onload = function () {
     if (req.status === 404) {
@@ -16,7 +16,7 @@ function getJSON(url, cb) {
   req.send();
 }
 
-function postJSON(url, obj, cb) {
+export function postJSON(url, obj, cb) {
   var req = new XMLHttpRequest();
   req.onload = function () {
     cb(JSON.parse(req.response));
@@ -27,7 +27,7 @@ function postJSON(url, obj, cb) {
   req.send(JSON.stringify(obj));
 }
 
-function deleteJSON(url, cb) {
+export function deleteJSON(url, cb) {
   var req = new XMLHttpRequest();
   req.onload = cb;
   req.open('DELETE', url);
