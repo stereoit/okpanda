@@ -12,16 +12,37 @@ import (
 
 func main() {
 
-	http.HandleFunc("/", simpleHandler)
 	http.HandleFunc("/api/teachers", teachersHandler)
 
-	bind := fmt.Sprintf("%s:%s", "127.0.0.1", "8081")
+	http.Handle("/", staticWrapper(http.Dir("dist")))
+
+	bind := fmt.Sprintf("%s:%s", "127.0.0.1", "8080")
 	fmt.Println("Listening for requests at ", bind)
 	err := http.ListenAndServe(bind, nil)
 	if err != nil {
 		panic(err)
 	}
 
+}
+
+// staticWrapper returns /index.html for any missing files
+// this helps to handle browserHistory
+func staticWrapper(root http.FileSystem) http.Handler {
+	return &staticServer{root: root, handler: http.FileServer(root)}
+}
+
+type staticServer struct {
+	root    http.FileSystem
+	handler http.Handler
+}
+
+func (s *staticServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	// check for 404
+	if _, err := s.root.Open(r.URL.Path); err != nil {
+		fmt.Println("Not found: ", r.URL.Path)
+		r.URL.Path = "/"
+	}
+	s.handler.ServeHTTP(w, r)
 }
 
 type Teacher struct {
@@ -74,9 +95,4 @@ func teachersHandler(res http.ResponseWriter, req *http.Request) {
 	}
 
 	fmt.Fprintf(res, "%v", string(json))
-}
-
-func simpleHandler(res http.ResponseWriter, req *http.Request) {
-	res.Header().Set("Content-type", "text/html")
-	fmt.Fprintf(res, "Nothing to see here, move to /api/teachers\n")
 }
