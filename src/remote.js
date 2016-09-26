@@ -1,4 +1,5 @@
-export const API_BASE = 'http://127.0.0.1:8081/api/';
+// export const API_BASE = 'http://127.0.0.1:8080/api/';
+export const API_BASE = '__REMOTE_SERVER__/api/';
 localStorage.token = localStorage.token || (Date.now()*Math.random());
 
 
