@@ -11,7 +11,7 @@ class TeacherSchedule extends React.Component {
         <h4>Available slots </h4>
         {teacher.slots.map((slot,id) =>
           <SlotComponent slot={slot} key={id}>
-            <BookSlot slot={slot} bookingHandler={bookingHandler} teacher={teacher}/>
+            <BookSlot bookingHandler={bookingHandler} teacher={teacher}/>
           </SlotComponent>
         )}
       </div>

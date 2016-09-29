@@ -28,6 +28,17 @@ export function postJSON(url, obj, cb) {
   req.send(JSON.stringify(obj));
 }
 
+export function putJSON(url, obj, cb) {
+  var req = new XMLHttpRequest();
+  req.onload = function () {
+    cb(JSON.parse(req.response));
+  };
+  req.open('PUT', url);
+  req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+  req.setRequestHeader('authorization', localStorage.token);
+  req.send(JSON.stringify(obj));
+}
+
 export function deleteJSON(url, cb) {
   var req = new XMLHttpRequest();
   req.onload = cb;

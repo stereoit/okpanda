@@ -1,8 +1,8 @@
 export default class Lesson {
-  constructor(when, duration, student, teacher) {
-    this.when = when
-    this.duration = duration
-    this.student = student
-    this.teacher = teacher
+  constructor(when, to, student, teacher) {
+    this.when = when.toISOString()
+    this.to = to.toISOString()
+    this.student = student.id
+    this.teacher = teacher.id
   }
 }

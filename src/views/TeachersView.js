@@ -1,15 +1,24 @@
 import React from 'react'
 import {Link} from 'react-router'
+import NewPerson from '../components/NewPerson';
 
-const TeachersView = (props) => {
-  console.log("Got thos props", props)
-  let teachers = props.teachers
+
+
+const TeachersView = ({teachers, teachersStore}) => {
   return (
     <div className="teachersview">
-     { teachers ? teachers.map((teacher,id) => <Link key={id} to={`teacher:${teacher.name}`}>{teacher.name}</Link> )
-         :
-          <span>No teachers yet</span>
+      <h2>Teachers View</h2>
+      {teachers && teachers.length > 0  ?
+        <ul>
+          { teachers.map((teacher,id) =>
+            <li key={id}><Link  to={`teacher/${teacher.id}`}>{teacher.name}</Link></li> )
+           }
+        </ul>
+        :
+        <p>No teachers yet</p>
       }
+      <h3>Create new teacher</h3>
+      <NewPerson onNewPerson={teachersStore.addTeacher}/>
     </div>
   )
 }

@@ -13,18 +13,32 @@ class StudentView extends React.Component {
   }
 
   newBookingHandler(slot, teacher) {
-    let {student} = this.props
-    let lesson = new Lesson(moment.unix(slot.from), moment.unix(slot.to), student, teacher)
+    let {teachersStore,studentsStore} = this.props
+    let {id} = this.props.routeParams
+    let student = studentsStore.getStudent(id)
+    console.log("newBookingHandler ", slot, teacher);
+    let lesson = new Lesson(slot.from, slot.to, student, teacher)
     teacher.lessons.push(lesson)
+    teachersStore.updateTeacher(teacher)
     student.lessons.push(lesson)
-    this.forceUpdate()
+    studentsStore.updateStudent(student)
+    // this.forceUpdate()
   }
 
   render() {
-    let {student, teachers} = this.props
+    let {teachersStore,studentsStore} = this.props
+    let {id} = this.props.routeParams
+    let student = studentsStore.getStudent(id)
     let bookedLessons = <p>No booked lessons yet.</p>
     if(student.lessons.length) {
-      bookedLessons = student.lessons.map( (lesson, id) => <LessonComponent lesson={lesson} key={id} /> )
+      bookedLessons = student.lessons.map( (lesson, id) =>
+        <LessonComponent
+          key={id}
+          lesson={lesson}
+          studentsStore={studentsStore}
+          teachersStore={teachersStore}
+        />
+      )
     }
     return (
       <div>
@@ -34,7 +48,7 @@ class StudentView extends React.Component {
 
         <h2>Those are available teachers</h2>
         <ul>
-          {teachers.map((teacher, id) =>
+          {teachersStore.getTeachers().map((teacher, id) =>
             <TeacherSchedule
               teacher={teacher}
               student={student}

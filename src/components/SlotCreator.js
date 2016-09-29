@@ -6,16 +6,16 @@ class SlotCreator extends React.Component {
   constructor(props){
     super(props)
 
-    let from_value = props.slot && props.slot.from || moment()
-    let from_valid = from_value.isValid()
-    let to_value = props.slot && props.slot.to || moment()
-    let to_valid = to_value.isValid()
+    let now = moment().minutes(0).seconds(0)
+
+    let from_value = props.slot && props.slot.from || now.format(dateTimeFormat)
+    let to_value = props.slot && props.slot.to || moment(now).add(5, 'hours').format(dateTimeFormat)
 
     this.state = {
-      from_value: from_value.format(dateTimeFormat),
-      from_valid: from_valid,
-      to_value: to_value.format(dateTimeFormat),
-      to_valid: to_valid
+      from_value: from_value,
+      from_valid: moment(from_value, dateTimeFormat).isValid(),
+      to_value: to_value,
+      to_valid: moment(to_value, dateTimeFormat).isValid()
     }
 
     this.checkTime = this.checkTime.bind(this)
@@ -67,8 +67,8 @@ class SlotCreator extends React.Component {
         { (from_valid && to_valid) &&
           <button onClick={() => {
               onNewSlot({
-                from: moment(from_value, dateTimeFormat).format("X"),
-                to: moment(to_value, dateTimeFormat).format("X")
+                from: moment(from_value, dateTimeFormat),
+                to: moment(to_value, dateTimeFormat),
               })
             }
           } >Create</button>

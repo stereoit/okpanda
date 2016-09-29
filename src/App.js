@@ -3,7 +3,9 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import TeacherView from './views/TeacherView';
 import TeachersView from './views/TeachersView';
 import StudentView from './views/StudentView';
+import StudentsView from './views/StudentsView';
 import TeacherStore from './stores/TeacherStore';
+import StudentsStore from './stores/StudentsStore';
 
 /**
 * each component can import and init as many stores as needed
@@ -19,13 +21,19 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      'teachers': TeacherStore.getTeachers()
+      'teachers': TeacherStore.getTeachers(),
+      'teachersStore': TeacherStore,
+      'students': StudentsStore.getStudents(),
+      'studentsStore': StudentsStore
     }
     this.updateTeachers = this.updateTeachers.bind(this)
+    this.updateStudents = this.updateStudents.bind(this)
+    // this.addTeacher = this.updateTeachers.bind(this)
   }
 
   componentWillMount() {
     TeacherStore.init();
+    StudentsStore.init();
     console.log("Initialized TeacherStore");
   }
 
@@ -33,6 +41,8 @@ class App extends Component {
     console.log("Adding changeListener");
     TeacherStore.addChangeListener(this.updateTeachers);
     this.updateTeachers(); // just to make sure we are loaded
+    StudentsStore.addChangeListener(this.updateStudents);
+    this.updateStudents();
   }
 
   componentWillUnmount() {
@@ -46,14 +56,17 @@ class App extends Component {
     });
   }
 
+  updateStudents() {
+    this.setState({
+      students: StudentsStore.getStudents()
+    })
+  }
+
   render() {
-    const childProps = {
-      teachers: this.state.teachers
-    }
     return (
       <div>
         <Nav />
-        {this.props.children && React.cloneElement(this.props.children, childProps)}
+        {this.props.children && React.cloneElement(this.props.children, this.state)}
       </div>
     )
   }
@@ -84,9 +97,10 @@ const routes = <Router history={browserHistory}>
   <Route path='/' component={App} >
     <IndexRoute component={Home} />
     <Route path='teachers' component={TeachersView} />
-    <Route path='teacher/:name' component={TeacherView} />
+    <Route path='students' component={StudentsView} />
+    <Route path='teacher/:id' component={TeacherView} />
 
-    <Route path='student/:name' component={StudentView} />
+    <Route path='student/:id' component={StudentView} />
     <Route path='*' component={NotFound} />
   </Route>
 </Router>

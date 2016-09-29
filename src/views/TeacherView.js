@@ -14,23 +14,35 @@ class TeacherView extends React.Component {
 
   newSlotHandler(slot) {
     // console.log("newSlotHandler: ", slot);
-    let {teacher} = this.props
-    let _slot = new Slot(moment.unix(slot.from), moment.unix(slot.to))
+    let {teachersStore} = this.props
+    let {id} = this.props.routeParams
+    const teacher = teachersStore.getTeacher(id)
+    let _slot = new Slot(slot.from, slot.to)
     teacher.slots.push(_slot)
+    teachersStore.updateTeacher(teacher)
     this.forceUpdate()
   }
 
   render() {
-    let {teacher} = this.props
+    let {studentsStore,teachersStore} = this.props
+    let {id} = this.props.routeParams
+    const teacher = teachersStore.getTeacher(id)
     return (
       <div>
         <h2>Hello {teacher.name}</h2>
         <p>Your availability</p>
-        {teacher.slots.map( (slot, id) =>   <SlotComponent slot={slot} key={id} />  )}
+        {teacher.slots && teacher.slots.map( (slot, id) =>   <SlotComponent slot={slot} key={id} />  )}
         <p>Add new availability block </p>
         <SlotCreator onNewSlot={this.newSlotHandler}/>
         <p>Booked lessons</p>
-        {teacher.lessons.map( (lesson, id) =>   <LessonComponent lesson={lesson} key={id} />  )}
+        {teacher.lessons && teacher.lessons.map( (lesson, id) =>
+          <LessonComponent
+            key={id}
+            lesson={lesson}
+            studentsStore={studentsStore}
+            teachersStore={teachersStore}
+          />
+        )}
       </div>
     )
   }
