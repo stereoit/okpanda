@@ -1,0 +1,39 @@
+a.btn {
+  color: $alabaster;
+  @include on-event {
+    text-decoration: none;
+  };
+}
+.btn {
+  display: inline-block;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+  padding: 0.25em 0.75em;
+  border: 1px solid transparent;
+  border-radius: $base-radius;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  // text-shadow: 0 1px 1px rgba(0,0,0,0.53);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.btn-default {
+  background-color: $alabaster;
+  border-color: $dusty-gray;
+  &:hover {
+    background-color: $light-grey;
+  }
+}
+
+.btn-primary {
+  color: $alabaster;
+  background-color: $brand-color;
+  border-color: $brand-color-darker;
+  &:hover {
+    background-color: darken($brand-color, 10%);
+  }
+}

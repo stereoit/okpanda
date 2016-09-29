@@ -1,0 +1,117 @@
+@import './bower_components/modular-scale/stylesheets/modular-scale';
+
+
+@function em ($target, $context) {
+  @return $target / $context * 1em;
+}
+
+$ms-base: 1em;
+$ms-ratio: $major-third;
+$ms-range:
+  $minor-third map-get($breakpoints, small),
+  $major-third map-get($breakpoints, med),
+  $fourth map-get($breakpoints, large);
+
+
+
+@debug ms-list(0, 4, $ms-base, $fourth);
+
+// /* baseline grid if needed */
+// body {
+//   background-image: linear-gradient(to bottom, transparent 0px, transparent 23px, red 23px, red 24px);
+//   background-size: 100% 24px;
+//   background-position: 0 -6px;
+// }
+/**
+* Basic typography style for copy text
+*/
+body {
+  color: $text-color;
+  font-family: $text-font-stack;
+}
+
+/**
+* Basic font-size setting for the website
+*/
+html {
+  font-size: 100%; /* This means 16px */
+  line-height: $baseline-height; // magic number that seems right by observing
+
+  @media (min-width: 800px) {
+    font-size: 112.5%; /* This means 18px */
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 125%; /* This means 20px */
+  }
+}
+// h1,h2,h3,h4,h5,h6 { font-family: $text-font-menu}
+
+h1 {
+  @include ms-respond(font-size, 3);
+  line-height: 2*$baseline-height*1rem;
+  margin-top: 1.25*$baseline-height*1rem;
+  margin-bottom: 0.25*$baseline-height*1rem;
+
+}
+h2 {
+  @include ms-respond(font-size, 3);
+  line-height: 2*$baseline-height*1rem;
+  margin-top: 1.25*$baseline-height*1rem;
+  margin-bottom: 0.75*$baseline-height*1rem;
+}
+h3 {
+  @include ms-respond(font-size, 2);
+  line-height: 2*$baseline-height*1rem;
+  margin-top: 0.75*$baseline-height*1rem;
+  margin-bottom: 0.25*$baseline-height*1rem;
+}
+h4 {
+  @include ms-respond(font-size, 2);
+  font-weight: 700;
+  margin-top: 0.75*$baseline-height*1rem;
+  margin-bottom: 0.25*$baseline-height*1rem;
+}
+h6 {
+  @include ms-respond(font-size, -1);
+  margin: 0.75*$baseline-height*1rem 0;
+}
+
+p,ul {
+  // max-width: 30em; // Between 22.5 and 37.5em
+  max-width: 22.5em;
+
+  @media (min-width: 47em) {
+    max-width: 33em;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 42.5em;
+  }
+  margin-top: 1em*$baseline-height;
+  margin-bottom: 1em*$baseline-height;
+}
+
+p + p {
+  margin-top: 0.75*1em*$baseline-height;
+}
+
+ul,ol {
+  margin: 0.75em*$baseline-height 0;
+  margin-left: 1.5em;
+  list-style-position: outside;
+  padding: 0;
+}
+
+li + li {
+  margin-top: 0.25em * $baseline-height;
+}
+
+p.tag {
+  @include ms-respond(font-size, -1);
+  margin-top: 0.5*1em*$baseline-height;
+  margin-bottom: 0.5*1em*$baseline-height;
+  font-weight: 300;
+  font-style: italic;
+  color: $mid-grey;
+}
