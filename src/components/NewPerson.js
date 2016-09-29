@@ -5,8 +5,8 @@ class NewPerson extends React.Component {
     let {onNewPerson} = this.props
     return (
       <div className="new-person">
-        <label>Name: <input type="text" ref={(c) => this._input = c }/></label>
-        <button onClick={() => onNewPerson( {name: this._input.value})}>Create</button>
+        <label>Name: <input type="text" ref={(c) => this._input = c }/></label>{' '}
+        <button className="btn btn-primary" onClick={() => onNewPerson( {name: this._input.value})}>Create</button>
       </div>
     )
   }

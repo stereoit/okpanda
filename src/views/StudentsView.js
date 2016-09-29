@@ -8,7 +8,7 @@ import NewPerson from '../components/NewPerson';
 
 const StudentsView = ({students,studentsStore}) => {
   return (
-    <div className="studentsView">
+    <div className="container">
       <h2>Students View</h2>
       {students && students.length > 0 ?
         <ul>

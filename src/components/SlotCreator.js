@@ -63,9 +63,9 @@ class SlotCreator extends React.Component {
             onChange={(event) => this.checkTime(event.target)}
           />
         { !to_valid && <span className="error">Not valid value </span>}
-        </label>
+        </label>{' '}
         { (from_valid && to_valid) &&
-          <button onClick={() => {
+          <button className="btn btn-primary" onClick={() => {
               onNewSlot({
                 from: moment(from_value, dateTimeFormat),
                 to: moment(to_value, dateTimeFormat),

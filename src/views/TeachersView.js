@@ -6,7 +6,7 @@ import NewPerson from '../components/NewPerson';
 
 const TeachersView = ({teachers, teachersStore}) => {
   return (
-    <div className="teachersview">
+    <div className="container">
       <h2>Teachers View</h2>
       {teachers && teachers.length > 0  ?
         <ul>

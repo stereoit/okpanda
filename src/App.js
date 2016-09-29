@@ -74,19 +74,53 @@ class App extends Component {
 
 
 const Nav = () => (
-  <div>
-    <Link to='/'>Home</Link>&nbsp;
-    <Link to='/teachers'>Teachers</Link>&nbsp;
-    <Link to='/students'>Students</Link>
+  <div className="top-menu">
+    <div className="nav">
+      <Link to='/'>Home</Link>&nbsp;
+      <Link to='/teachers'>Teachers</Link>&nbsp;
+      <Link to='/students'>Students</Link>
+    </div>
   </div>
 )
 
 const Home = () =>
-  <div>
-    <h1>Hi, this is simple scheduler app</h1>
+  <div className="container">
+    <h1>Simple scheduler app</h1>
     <p>
-      Please use appropriate route.
+      Please use top menu for navigation
     </p>
+    <h4>About this app</h4>
+    <p>Repository: <a href="https://github.com/stereoit/okpanda">GitHub</a></p>
+    <ul>
+      <li>Dynamic URL routing (no page refresh) using React Router</li>
+      <li>Utilizes Flux for asynchronous state management</li>
+      <li>React powered with reusable components (Slot creator)</li>
+      <li>Simple styling done with Sass and 7+1 pattern</li>
+      <li>Backend written for fun in golang</li>
+      <li>DB backend is Mongo</li>
+      <li>Tools includes: ES6, Webpack, Sass, git, React</li>
+    </ul>
+
+    <h4>Thoughts for improvement</h4>
+    <p>I've hacked this in about 16 hours of my free time to see if I am able to put together proof of concept for full stack application. In every part of it I do see space for improvements, namely:</p>
+    <ul>
+      <li>Backend: middleware for JSON layer + utilities for responding in error, simplify and abstract the mongoDB operations</li>
+      <li>Frontend: different state management using proper Flux/Redux/MobX technollogies.</li>
+      <li>Design: Better to have it from the designer, but use Material Design Lite if not available. Refactor the date pickers.</li>
+    </ul>
+
+    <h4>Time spent</h4>
+    <ul>
+      <li>1h - initial reading, modeling the domain</li>
+      <li>1h - project setup (rollup, package.json, structure, template)</li>
+      <li>4h - react components + application logic (stores, passing props, etc.)</li>
+      <li>2h - troubleshooting rollup ES6 imports + react router integration</li>
+      <li>4h - golang backend including middleware for handling dynamic urls on backend</li>
+      <li>1h - simple styling</li>
+      <li>1h - final debugging to application (momentjs datetime handling,refactoring)</li>
+      <li>2h - github page hosting + own hosting</li>
+    </ul>
+    <p>I think same application can now be boostrapped in about 6 hours.</p>
   </div>
 
 const NotFound = () => (

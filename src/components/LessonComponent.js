@@ -13,10 +13,10 @@ class LessonComponent extends React.Component {
     return (
       <div className="lesson">
         <ul>
-          <li>when: {when.format(dateTimeFormat)}</li>
-          <li>to: {to.format(dateTimeFormat)}</li>
-          <li>student: {student.name}</li>
-          <li>teacher: {teacher.name}</li>
+          <li><span className="info">when:</span> {when.format(dateTimeFormat)}</li>
+          <li><span className="info">to:</span> {to.format(dateTimeFormat)}</li>
+          <li><span className="info">student:</span> {student.name}</li>
+          <li><span className="info">teacher:</span> {teacher.name}</li>
         </ul>
       </div>
     )

@@ -28,7 +28,7 @@ class TeacherView extends React.Component {
     let {id} = this.props.routeParams
     const teacher = teachersStore.getTeacher(id)
     return (
-      <div>
+      <div className="container">
         <h2>Hello {teacher.name}</h2>
         <p>Your availability</p>
         {teacher.slots && teacher.slots.map( (slot, id) =>   <SlotComponent slot={slot} key={id} />  )}

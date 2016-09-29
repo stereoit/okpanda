@@ -19,14 +19,14 @@ class BookSlot extends React.Component {
     const {booking} = this.state
 
     return (
-      <div>
-        <button onClick={() => this.setState({booking: true})}>Book lesson in this slot</button>
+      <span>{' '}
+        <button className="btn btn-primary" onClick={() => this.setState({booking: true})}>Book lesson in this slot</button>
         { booking ?
           <SlotCreator slot={slot} onNewSlot={this.newSlotHandler}>
-            <button onClick={() => this.setState({booking: false})}>Cancel</button>
+            <button className="btn btn-default" onClick={() => this.setState({booking: false})}>Cancel</button>
           </SlotCreator>
         : null }
-      </div>
+      </span>
     )
   }
 }

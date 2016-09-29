@@ -41,7 +41,7 @@ class StudentView extends React.Component {
       )
     }
     return (
-      <div>
+      <div className="container">
         <h1>Hello {student.name}</h1>
         <h2>Booked lessons</h2>
         {bookedLessons}
