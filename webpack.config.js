@@ -20,7 +20,7 @@ module.exports = env => {
           loader: 'webpack-replace',
           query: {
             search: '__REMOTE_SERVER__',
-            replace: env.dev ? 'http://127.0.0.1:8081' : 'http://127.0.0.1:8080'
+            replace: env.dev ? 'http://127.0.0.1:8081' : ''
           }
         }
       ]
